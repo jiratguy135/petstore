@@ -1,7 +1,7 @@
 *** Settings ***
 Library    RequestsLibrary
 Resource    ../keyword/pet.robot
-Variables    ../testdata/data_pet.yaml
+Variables    ../resource/data_pet.yaml
 *** Test Cases ***
 1. 200
     pet.Post Upload an Image    1    test200    200

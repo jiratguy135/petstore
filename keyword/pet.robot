@@ -2,8 +2,8 @@
 Library    RequestsLibrary
 Library    JSONLibrary
 
-Variables    ../testdata/url.yaml
-Variables    ../testdata/data_pet.yaml
+Variables    ../resource/url.yaml
+Variables    ../resource/data_pet.yaml
 
 *** Keywords ***
 Post Upload an Image
@@ -11,7 +11,7 @@ Post Upload an Image
     ${URL}    Set Variable    ${api}${petId}${uploadImage}
     Create Session     mysession     ${URL}
     ${Header}     Create Dictionary     accept=application/json
-    ${image}    GET FILE FOR STREAMING UPLOAD    ../testdata/pet_image_test.png
+    ${image}    GET FILE FOR STREAMING UPLOAD    ../resource/pet_image_test.png
     ${from-data}    Create Dictionary    additionalMetadata=${text}    file=${image}
     IF    '${200/415}' == '200'
         ${response}    POST ON SESSION    mysession    ${URL}    headers=${Header}    files=${from-data}    expected_status=ok
