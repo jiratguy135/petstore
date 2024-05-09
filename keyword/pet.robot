@@ -41,3 +41,24 @@ Put Update an Existing Pet
     Create Session    mysession    ${api}
     ${response}    PUT On Session    mysession    ${api}    json=${PETID2}    expected_status=ok
     Log To Console    ${response.json()}
+Get Finds Pets by Status
+    [Arguments]    ${status}
+    ${api_get_status}    Set Variable   ${api}${bystatus}${status}
+    Create Session    mysession    ${api_get_status}
+    ${body}    Create Dictionary    status=${status}
+    ${response}    GET On Session    mysession    ${api_get_status}    json=${body}    expected_status=ok
+    #Log To Console    ${response.json()}
+Get Finds Pets by ID
+    [Arguments]    ${id}
+    ${api_get_id}    Set Variable   ${api}${id}
+    ${body}    Create Dictionary    petId=${id}
+    Create Session    mysession    ${api_get_id}
+    ${response}    GET On Session    mysession    ${api_get_id}    json=${body}    expected_status=any
+    IF    '${response.status_code}' == '200'
+        Should Be Equal    '${response.status_code}'    '200'
+    ELSE IF    '${response.status_code}' == '404'
+        Should Be Equal    '${response.status_code}'    '404'
+    ELSE IF    '${response.status_code}' == '400'
+        Should Be Equal    '${response.status_code} '   '400'
+    END
+    
